@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tic Tac Toe</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #4e54c8, #8f94fb);
+}
+
+.container {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    text-align: center;
+}
+
+h1 {
+    margin-bottom: 15px;
+}
+
+.status {
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+.board {
+    display: grid;
+    grid-template-columns: repeat(3, 90px);
+    grid-template-rows: repeat(3, 90px);
+    gap: 5px;
+    margin: 15px auto;
+}
+
+.cell {
+    background: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 32px;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 10px;
+    transition: 0.3s;
+}
+
+.cell:hover {
+    background: #ddd;
+}
+
+button {
+    margin-top: 10px;
+    padding: 8px 15px;
+    border: none;
+    background: #4e54c8;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    opacity: 0.8;
+}
+
+@media(max-width: 400px){
+    .board {
+        grid-template-columns: repeat(3, 70px);
+        grid-template-rows: repeat(3, 70px);
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>Tic Tac Toe</h1>
+    <div class="status" id="status">Player X's Turn</div>
+
+    <div class="board" id="board">
+        <div class="cell" data-index="0"></div>
+        <div class="cell" data-index="1"></div>
+        <div class="cell" data-index="2"></div>
+        <div class="cell" data-index="3"></div>
+        <div class="cell" data-index="4"></div>
+        <div class="cell" data-index="5"></div>
+        <div class="cell" data-index="6"></div>
+        <div class="cell" data-index="7"></div>
+        <div class="cell" data-index="8"></div>
+    </div>
+
+    <button onclick="restartGame()">Restart Game</button>
+</div>
+
+<script>
+const cells = document.querySelectorAll(".cell");
+const statusText = document.getElementById("status");
+
+let currentPlayer = "X";
+let gameActive = true;
+let boardState = ["", "", "", "", "", "", "", "", ""];
+
+const winPatterns = [
+    [0,1,2], [3,4,5], [6,7,8], // rows
+    [0,3,6], [1,4,7], [2,5,8], // columns
+    [0,4,8], [2,4,6]           // diagonals
+];
+
+cells.forEach(cell => cell.addEventListener("click", handleClick));
+
+function handleClick() {
+    const index = this.dataset.index;
+
+    if (boardState[index] !== "" || !gameActive) return;
+
+    boardState[index] = currentPlayer;
+    this.textContent = currentPlayer;
+
+    checkWinner();
+}
+
+function checkWinner() {
+    let won = false;
+
+    for (let pattern of winPatterns) {
+        const [a, b, c] = pattern;
+        if (boardState[a] && 
+            boardState[a] === boardState[b] && 
+            boardState[a] === boardState[c]) {
+            won = true;
+            break;
+        }
+    }
+
+    if (won) {
+        statusText.textContent = `Player ${currentPlayer} Wins!`;
+        gameActive = false;
+        return;
+    }
+
+    if (!boardState.includes("")) {
+        statusText.textContent = "It's a Draw!";
+        gameActive = false;
+        return;
+    }
+
+    currentPlayer = currentPlayer === "X" ? "O" : "X";
+    statusText.textContent = `Player ${currentPlayer}'s Turn`;
+}
+
+function restartGame() {
+    boardState = ["", "", "", "", "", "", "", "", ""];
+    gameActive = true;
+    currentPlayer = "X";
+    statusText.textContent = "Player X's Turn";
+    cells.forEach(cell => cell.textContent = "");
+}
+</script>
+
+</body>
+</html>

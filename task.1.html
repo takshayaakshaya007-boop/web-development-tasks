@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Responsive Landing Page</title>
+
+<style>
+/* ===== RESET ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+/* ===== NAVBAR ===== */
+nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    padding: 15px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: transparent;
+    transition: 0.4s ease;
+    z-index: 1000;
+}
+
+nav.scrolled {
+    background: #1e1e2f;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+nav .logo {
+    font-size: 22px;
+    font-weight: bold;
+    color: white;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+}
+
+nav ul li {
+    margin-left: 25px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: white;
+    font-size: 16px;
+    transition: 0.3s;
+    padding: 5px 8px;
+}
+
+/* Hover Effect */
+nav ul li a:hover {
+    background: #ff9800;
+    color: #fff;
+    border-radius: 4px;
+}
+
+/* ===== HERO SECTION ===== */
+.hero {
+    height: 100vh;
+    background: linear-gradient(to right, #4e54c8, #8f94fb);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white;
+    padding: 20px;
+}
+
+.hero h1 {
+    font-size: 48px;
+}
+
+.hero p {
+    margin-top: 15px;
+    font-size: 18px;
+}
+
+/* ===== CONTENT SECTION ===== */
+section {
+    padding: 100px 40px;
+    text-align: center;
+}
+
+section:nth-child(even) {
+    background: #f4f4f4;
+}
+
+/* ===== RESPONSIVE ===== */
+.menu-toggle {
+    display: none;
+    font-size: 26px;
+    color: white;
+    cursor: pointer;
+}
+
+@media (max-width: 768px) {
+    nav ul {
+        position: absolute;
+        top: 60px;
+        left: -100%;
+        width: 100%;
+        flex-direction: column;
+        background: #1e1e2f;
+        text-align: center;
+        transition: 0.4s;
+    }
+
+    nav ul.active {
+        left: 0;
+    }
+
+    nav ul li {
+        margin: 15px 0;
+    }
+
+    .menu-toggle {
+        display: block;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ===== NAVIGATION ===== -->
+<nav id="navbar">
+    <div class="logo">MyBrand</div>
+    <div class="menu-toggle" id="menu-toggle">&#9776;</div>
+    <ul id="nav-links">
+        <li><a href="#">Home</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Services</a></li>
+        <li><a href="#">Contact</a></li>
+    </ul>
+</nav>
+
+<!-- ===== HERO ===== -->
+<div class="hero">
+    <div>
+        <h1>Responsive Landing Page</h1>
+        <p>Interactive navigation menu with scroll and hover effects.</p>
+    </div>
+</div>
+
+<!-- ===== EXTRA SECTIONS ===== -->
+<section>
+    <h2>About Section</h2>
+    <p>Scroll down to see the navigation bar change color.</p>
+</section>
+
+<section>
+    <h2>Services Section</h2>
+    <p>Hover over menu items to see interactive effects.</p>
+</section>
+
+<section>
+    <h2>Contact Section</h2>
+    <p>This is a fully responsive landing page example.</p>
+</section>
+
+<!-- ===== JAVASCRIPT ===== -->
+<script>
+// Change navbar style on scroll
+window.addEventListener("scroll", function() {
+    const navbar = document.getElementById("navbar");
+    navbar.classList.toggle("scrolled", window.scrollY > 50);
+});
+
+// Mobile menu toggle
+const toggle = document.getElementById("menu-toggle");
+const navLinks = document.getElementById("nav-links");
+
+toggle.addEventListener("click", function() {
+    navLinks.classList.toggle("active");
+});
+</script>
+
+</body>
+</html>
